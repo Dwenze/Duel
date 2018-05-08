@@ -6,8 +6,10 @@
 </template>
 
 <script>
+import Login from './components/login';
 export default {
-  name: 'App'
+  name: 'App',
+  components: {Login}
 }
 </script>
 
