@@ -1,22 +1,44 @@
 <template>
   <div class="hello">
     <h1>{{ msg }}</h1>
-    <h2>Essential Links</h2>
-    <input type="input" name="send" @click="getDataFromExpress" value="get">
-    <input type="input" name="send" @click="login" value="token">
+    <h2>Login</h2>
+    <input type="input" v-model="username">
+    <input type="input" v-model="password">
+    <input type="button" @click="login" value="登录">
   </div>
 </template>
 
 <script>
 export default {
-  name: 'login',
-  data () {
+  name: 'Login',
+   data () {
     return {
       username: "",
-      password: ""
+      password: "",
+      msg: "",
     }
   },
   methods: {
+    login() {
+      var loginMsg = {
+        username: this.username,
+        password: this.password,
+      }
+      var secret = this.$secret.jwt_secret;
+      var encoded = this.$jwt.encode(loginMsg, secret);
+      this.$http.post('/api/login', {jwtString: encoded})
+        .then((res) => {
+          if (res.data.code === 0) {
+            this.$router.push({path: '/'});
+          }
+          console.log(res);
+          this.msg = res.data.msg;
+
+        })
+        .catch(err => {
+          alert('服务器出错')
+        });
+    }
   }
 }
 </script>

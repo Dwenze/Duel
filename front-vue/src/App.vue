@@ -1,5 +1,6 @@
 <template>
   <div id="app">
+    <header></header>
     <img src="./assets/logo.png">
     <router-view/>
   </div>
@@ -7,9 +8,10 @@
 
 <script>
 import Login from './components/login';
+import Header from './components/header';
 export default {
   name: 'App',
-  components: {Login}
+  components: {Login, Header}
 }
 </script>
 

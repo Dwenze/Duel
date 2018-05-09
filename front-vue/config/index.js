@@ -27,6 +27,13 @@ module.exports = {
             pathRewrite: {
                 '^/api': ''
             }
+        },
+        '/app': {
+            target: 'http://localhost:3000/app/',
+            changeOrigin: true,
+            pathRewrite: {
+                '^/app': ''
+            }
         }
     },
 

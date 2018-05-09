@@ -1,9 +1,10 @@
+var secret = require('./secret');
 var express = require('express');
 var router = express.Router();
 var jwt = require('jwt-simple');
 var mongoose = require('mongoose');
-/* GET home page. */
-var db = mongoose.connect('mongodb://duelroot:rootduel@104.192.83.172/duel');
+//+ api
+var db = mongoose.createConnection(secret.db_address);
 db.on('error', (error)=> {
     console.log(error);
 });
@@ -27,15 +28,14 @@ router.post('/', function(req, res, next) { //test
     res.json({msg:Math.random() * 10});
 });
 
-router.post('/token', function(req, res, next) {
-    var secret = Buffer.from('ae1a1915a379f3be5394b64d14794932', 'hex');
-    var decoded = jwt.decode(req.body.jwtString, secret);
+router.post('/login', function(req, res, next) {
+    var decoded = jwt.decode(req.body.jwtString, secret.jwt_secret);
     console.log(decoded);
-    if (decoded.password == "o") {
-        res.json({msg: "OK"});
+    if (decoded.username == "un" && decoded.password == "pw") {
+        res.json({msg: "Login succeed."});
     }
     else {
-        res.json({msg: "NO"});
+        res.json({msg: "Login failed."});
     }
 });
 

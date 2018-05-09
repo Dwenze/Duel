@@ -8,10 +8,13 @@ import router from './router'
 import axios from 'axios'
 //+ jwt
 import jwt from 'jwt-simple'
+//+ secret key file
+import secret from './router/secret'
 
 Vue.prototype.$http = axios;
 Vue.prototype.$jwt = jwt;
-Vue.config.productionTip = false
+Vue.prototype.$secret = secret;
+Vue.config.productionTip = false;
 
 /* eslint-disable no-new */
 new Vue({
