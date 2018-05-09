@@ -17,4 +17,4 @@ selenium-debug.log
 *.sln
 
 # Private keys
-*/secret.js
+secret.js
