@@ -1,42 +1,44 @@
-var secret = require('./secret');
-var express = require('express');
-var router = express.Router();
-var jwt = require('jwt-simple');
-var mongoose = require('mongoose');
-//+ api
-var db = mongoose.createConnection(secret.db_address);
-db.on('error', (error)=> {
-    console.log(error);
-});
-db.once('open', function (callback) {
-    console.log('yay!');
-})
-
-var duelSchema = mongoose.Schema({
-    username : String,
-    password : String,
-});
-
-duelSchema.methods.findByUsername = function (callback) {
-    return this.model('Duel').find({username: this.username}, callback);
-}
-
-var duelModel = mongoose.model('Duel', duelSchema);
-
-
-router.post('/', function(req, res, next) { //test
+let secret = require('./secret');
+let express = require('express');
+let router = express.Router();
+let jwt = require('jwt-simple');
+let dbWorker = require('../db/dbWorker');
+let Cache = {};
+router.post('/*', function(req, res, next) { //test
     res.json({msg:Math.random() * 10});
 });
 
 router.post('/login', function(req, res, next) {
-    var decoded = jwt.decode(req.body.jwtString, secret.jwt_secret);
-    console.log(decoded);
-    if (decoded.username == "un" && decoded.password == "pw") {
-        res.json({msg: "Login succeed."});
+    //dbWorker.findUser(res.body)
+    if (req.body.username == "un" && req.body.password == "pw") {
+        let preload = {
+          username: req.body.username,
+          exp: new Date().getTime + 10*1000,
+        }
+        let token = jwt.encode(preload, secret.jwt_secret);
+        res.json({code: 0, data: token, msg: "Login succeed."});
     }
     else {
-        res.json({msg: "Login failed."});
+        res.json({code: 1, msg: "Login failed."});
     }
 });
 
+router.post('/register', function(req, res, next) {
+    let decoded = jwt.decode(req.body.jwtString, secret.jwt_secret);
+    console.log(decoded);
+    if (decoded.username == "un" && decoded.password == "pw") {
+        res.json({code: 0, msg: "Register succeed."});
+    }
+    else {
+        res.json({code: 1, msg: "Register failed."});
+    }
+});
+
+router.post('/app/duel/*', function(req, res, next) {
+    next();
+})
+
+router.post('/app/duel/startwait', function(req, res, next) {
+    
+})
 module.exports = router;

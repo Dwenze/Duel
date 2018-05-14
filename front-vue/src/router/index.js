@@ -1,7 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Login from '@/components/login'
-import secret from './secret'
 import jwt from 'jwt-simple'
 
 Vue.use(Router);
@@ -24,6 +23,7 @@ router.beforeEach((to, from, next) => {
             //+ TODO: 连接数据库检查用户是否存在。
         }
     }
+            next();
 });
 
 export default router;

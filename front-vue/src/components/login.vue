@@ -11,7 +11,7 @@
 <script>
 export default {
   name: 'Login',
-   data () {
+    data () {
     return {
       username: "",
       password: "",
@@ -19,21 +19,26 @@ export default {
     }
   },
   methods: {
-    login() {
-      var loginMsg = {
+    login () {
+      let token = "";
+      if (token = window.localStorage.getItem('auth')) {
+        console.log('Existing token: '+ token);
+      }
+      let loginMsg = {
         username: this.username,
         password: this.password,
       }
-      var secret = this.$secret.jwt_secret;
-      var encoded = this.$jwt.encode(loginMsg, secret);
-      this.$http.post('/api/login', {jwtString: encoded})
+      this.$http.post('/api/login', loginMsg)
         .then((res) => {
           if (res.data.code === 0) {
+            window.localStorage.setItem('auth', res.data.data);
             this.$router.push({path: '/'});
+          }
+          else {
+
           }
           console.log(res);
           this.msg = res.data.msg;
-
         })
         .catch(err => {
           alert('服务器出错')

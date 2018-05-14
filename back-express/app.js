@@ -1,9 +1,11 @@
-var express = require('express'),
+let express = require('express'),
     https = require('https'),
     http = require('http'),
     path = require('path'),
     cors = require('cors'),
     fs = require('fs'),
+    jwt = require('jwt-simple'),
+    secret = require('./routes/secret'),
     session = require('express-session'),
     MongoStore = require('connect-mongo')(session),
     //config = require('./common/config'),
@@ -22,14 +24,15 @@ app.set('views', __dirname + '/views');
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 
 
-var api = require('./routes/api');
-var apps = require('./routes/apps');
+let api = require('./routes/api');
+let apps = require('./routes/apps');
 
 // app.set(cors({
 //     origin: ['http://localhost:8008'],
 //     methods: ['GET', 'POST'],
 //     alloweHeaders:['Content-Type', '*']
 // }));
+
 app.use(bodyParser.json({
     uploadDir: __dirname + '/covers',
     keepExtensions: true,
@@ -37,6 +40,20 @@ app.use(bodyParser.json({
 }));
 app.use(urlencodedParser);
 app.use(express.static('public'));
+
+app.all('*', function(req, res, next) {
+    req.token = req.headers.auth;
+    console.log(req.headers.auth || 'No Auth');
+    if (req.token) {
+        req.auth = jwt.decode(req.token, secret.jwt_secret);
+        if (req.auth.username) {
+            if (req.auth.exp >= new Date().getTime()) {
+                req.auth = undefined;
+            }
+        }
+    }
+    next();
+});
 
 app.get('/', function(req, res, next) {
   res.render("OK");
