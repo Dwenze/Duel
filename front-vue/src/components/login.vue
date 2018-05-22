@@ -1,10 +1,17 @@
 <template>
   <div class="hello">
-    <h1>{{ msg }}</h1>
-    <h2>Login</h2>
-    <input type="input" v-model="username">
-    <input type="input" v-model="password">
-    <input type="button" @click="login" value="登录">
+    <h2>登录</h2>
+    <div class="input-container">
+      <el-input v-model="username" placeholder="请输入用户名">
+        <template name="c1" style="color:red" slot="prepend">用户名</template>
+      </el-input>
+      <el-input v-model="password" type="password" placeholder="请输入密码">
+        <template slot="prepend">密码</template>
+      </el-input>
+    </div>
+    <div class="button-container" style="margin-top: 10px;">
+      <el-button type="primary" style="width: 100%" @click="login">登录</el-button>
+    </div>
   </div>
 </template>
 
@@ -31,17 +38,23 @@ export default {
       this.$http.post('/api/login', loginMsg)
         .then((res) => {
           if (res.data.code === 0) {
+            console.log('Received token: '+ res.data.data);
+            this.$message.success({
+              message: '登录成功',
+            });
             window.localStorage.setItem('auth', res.data.data);
             this.$router.push({path: '/'});
           }
           else {
+            this.$message.error({
+              message: '用户名或密码错误',
+            });
 
           }
           console.log(res);
-          this.msg = res.data.msg;
         })
         .catch(err => {
-          alert('服务器出错')
+          this.msg = '服务器出错:'+err.message;
         });
     }
   }
@@ -49,6 +62,14 @@ export default {
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
+<style>
+  .input-container .el-input-group__prepend {
+    width: 50px;
+  }
+  .input-container .el-input {
+    margin-top: 10px;
+  }
+</style>
 <style scoped>
 h1, h2 {
   font-weight: normal;
@@ -63,5 +84,24 @@ li {
 }
 a {
   color: #42b983;
+}
+
+
+.bg-purple-dark {
+  background: #99a9bf;
+}
+.bg-purple {
+  background: #d3dce6;
+}
+.bg-purple-light {
+  background: #e5e9f2;
+}
+.grid-content {
+  border-radius: 4px;
+  min-height: 36px;
+}
+.row-bg {
+  padding: 10px 0;
+  background-color: #f9fafc;
 }
 </style>

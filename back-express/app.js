@@ -80,5 +80,4 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.json({msg: err.message});
 });
-
 module.exports = app;

@@ -8,10 +8,11 @@
 
 <script>
 import Login from './components/login';
+import Register from './components/register';
 import Header from './components/header';
 export default {
   name: 'App',
-  components: {Login, Header}
+  components: {Login, Register, Header}
 }
 </script>
 

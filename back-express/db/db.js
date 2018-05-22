@@ -1,7 +1,6 @@
 var mongoose = require('mongoose');
 var url = require('../routes/secret').db_address;
-
-mongoose.createConnection(url);
+mongoose.connect(url);
 
 mongoose.connection.on('connected', () => {
     console.log('Mongoose connection succeed');

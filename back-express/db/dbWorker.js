@@ -1,5 +1,5 @@
 let mongoose = require('./db.js');
-mongoose.Promise = global.Promise;
+//mongoose.Promise = global.Promise;
 let User = require('./schema/user');
 
 
@@ -10,7 +10,7 @@ exports.addUser = function (data, callback) {
         .then(doc => {
             if (doc === null) {
                 error.msg = 'username_or_password_error';
-                throw err;
+                reject(error);
             }
             else {
                 new User({
@@ -32,10 +32,12 @@ exports.findUser = function (data, callback) {
     User.findOne({username: data.username})
         .exec()
         .then(doc => {
+            console.log(doc);
             if (doc === null) {
                 callback({code: 1, err: 'username_does_not_exist'});
             }
             else {
+                console.log(data);
                 callback({code: 0, data: data});
             }
         })

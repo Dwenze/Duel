@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Login from '@/components/login'
+import Register from '@/components/register'
 import jwt from 'jwt-simple'
 
 Vue.use(Router);
@@ -8,9 +9,14 @@ Vue.use(Router);
 const router = new Router({
   routes: [
     {
-      path: '/',
+      path: '/login',
       name: 'Login',
       component: Login
+    },
+    {
+      path: '/register',
+      name: 'Register',
+      component: Register
     }
   ]
 });
@@ -23,7 +29,7 @@ router.beforeEach((to, from, next) => {
             //+ TODO: 连接数据库检查用户是否存在。
         }
     }
-            next();
+    next();
 });
 
 export default router;
