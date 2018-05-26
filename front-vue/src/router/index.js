@@ -1,25 +1,34 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Login from '@/components/login'
-import Register from '@/components/register'
 import jwt from 'jwt-simple'
+import Rank from '@/components/rank'
 
 Vue.use(Router);
-
-const router = new Router({
-  routes: [
-    {
-      path: '/login',
-      name: 'Login',
-      component: Login
-    },
-    {
-      path: '/register',
-      name: 'Register',
-      component: Register
-    }
-  ]
-});
+let router = null;
+if ((navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i))) {
+  console.log('MOBILE');
+  router = new Router({
+    routes: [
+      {
+        path: '/',
+        name: 'Rank',
+        component: Rank
+      }
+    ]
+  });
+}
+else {
+    console.log('NOT MOBILE');
+    router = new Router({
+    routes: [
+      {
+        path: '/',
+        name: 'Rank',
+        component: Rank
+      }
+    ]
+  });
+}
 
 router.beforeEach((to, from, next) => {
     var token;

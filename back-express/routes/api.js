@@ -4,6 +4,7 @@ let router = express.Router();
 let jwt = require('jwt-simple');
 let dbWorker = require('../db/dbWorker');
 let Cache = {};
+Cache.userMap = new Map();
 router.post('/*', function(req, res, next) { //test
     console.log(req.body);
     //res.json({msg:Math.random() * 10});
@@ -49,6 +50,6 @@ router.post('/app/duel/*', function(req, res, next) {
 })
 
 router.post('/app/duel/startwait', function(req, res, next) {
-    
+
 })
 module.exports = router;

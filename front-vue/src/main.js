@@ -10,6 +10,9 @@ import App from './App'
 import axios from 'axios'
 axios.interceptors.request.use(
 	config => {
+		if (config.url == '/') {
+			
+		}
 		let token = window.localStorage.getItem('auth');
 		if (token) {
 			config.headers.auth = token;

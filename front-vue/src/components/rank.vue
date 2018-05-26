@@ -6,7 +6,7 @@
 
 <script>
 export default {
-  name: 'header',
+  name: 'rank',
   data () {
     return {
       username: "",
