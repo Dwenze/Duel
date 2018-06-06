@@ -64,6 +64,7 @@
 
 <script>
 import Rank from './components/rank';
+import Duel from './components/duel';
 export default {
   name: 'App',
   data () {
@@ -94,7 +95,7 @@ export default {
             });
             window.localStorage.setItem('auth', res.data.data);
             this.loginFormVisible = false;
-            this.$router.push({path: '/'});
+            this.$router.push({path: '/duel'});
           }
           else {
             this.$message.error({

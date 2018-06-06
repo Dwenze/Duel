@@ -17,15 +17,20 @@ router.post('/login', function(req, res, next) {
             console.log(ans);
             switch (ans.code) {
                 case 0:
-                    let preload = {
-                      username: req.body.username,
-                      exp: new Date().getTime() + 10*1000,
+                    if (ans.data.username === req.body.username && ans.data.password === req.body.password) { //登录成功，签发token
+                        let preload = {
+                          username: req.body.username,
+                          exp: new Date().getTime() + 10*1000,
+                        }
+                        let token = jwt.encode(preload, secret.jwt_secret);
+                        res.json({code: 0, data: token, msg: "login_succeed."});
                     }
-                    let token = jwt.encode(preload, secret.jwt_secret);
-                    res.json({code: 0, data: token, msg: "Login succeed."});
+                    else {
+                        res.json({code: 1, data: token, msg: "username_or_password_wrong"});
+                    }
                     break;
                 case 1:
-                    res.json({code: 1, msg: ans.err});
+                    res.json({code: 1, msg: "unexcepted_error_" + ans.err.message});
                     break;
             }
         });
@@ -36,20 +41,30 @@ router.post('/login', function(req, res, next) {
 });
 
 router.post('/register', function(req, res, next) {
-    let decoded = jwt.decode(req.body.jwtString, secret.jwt_secret);
-    if (decoded.username == "un" && decoded.password == "pw") {
-        res.json({code: 0, msg: "Register succeed."});
-    }
-    else {
-        res.json({code: 1, msg: "Register failed."});
-    }
+    dbWorker.addUser(req.body,
+        (ans) => {
+            console.log(ans);
+            switch (ans.code) {
+                case 0:
+                    let preload = {
+                      username: req.body.username,
+                      exp: new Date().getTime() + 10*1000,
+                    }
+                    let token = jwt.encode(preload, secret.jwt_secret);
+                    res.json({code: 0, data: token, msg: "Register succeed."});
+                    break;
+                case 1:
+                    res.json({code: 1, msg: ans.err});
+                    break;
+            }
+        });
 });
 
 router.post('/app/duel/*', function(req, res, next) {
     next();
 })
 
-router.post('/app/duel/startwait', function(req, res, next) {
-
-})
+// router.post('/app/duel/startwait', function(req, res, next) {
+//     if (Cache.userMap.get(req))
+// })
 module.exports = router;

@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import jwt from 'jwt-simple'
 import Rank from '@/components/rank'
+import Duel from '@/components/duel'
 
 Vue.use(Router);
 let router = null;
@@ -25,6 +26,11 @@ else {
         path: '/',
         name: 'Rank',
         component: Rank
+      },
+      {
+        path: '/duel',
+        name: 'Duel',
+        component: Duel
       }
     ]
   });
