@@ -1,6 +1,13 @@
 <template>
   <div class="hello">
-    <div class="m-hd"></div>
+    <div class="m-hd">
+      <el-container style="height: 500px; border: 1px solid">
+        <el-aside width="200px" style="background-color: rgb(238, 241, 246)"></el-aside>
+      <el-header>123</el-header>
+      <el-menu :default-openeds="['1', '3']"></el-menu>
+    </el-container>
+    </div>
+
   </div>
 </template>
 
@@ -25,4 +32,10 @@ export default {
   width: 100%;
   height: 40px;
 }
+.el-header{
+  min-width:500px;
+  height:100px;
+  background-color: orange;
+}
 </style>
+
