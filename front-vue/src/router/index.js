@@ -1,7 +1,10 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import jwt from 'jwt-simple'
-import Rank from '@/components/rank'
+import Duel from '@/components/duel'
+import DuelMobile from '@/components/duelmobile'
+import Index from '@/components/index'
+import IndexMobile from '@/components/indexmobile'
 
 Vue.use(Router);
 let router = null;
@@ -11,8 +14,13 @@ if ((navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobi
     routes: [
       {
         path: '/',
-        name: 'Rank',
-        component: Rank
+        name: 'IndexMobile',
+        component: IndexMobile
+      },
+      {
+        path: '/duel',
+        name: 'DuelMobile',
+        component: DuelMobile
       }
     ]
   });
@@ -23,8 +31,13 @@ else {
     routes: [
       {
         path: '/',
-        name: 'Rank',
-        component: Rank
+        name: 'Index',
+        component: Index
+      },
+      {
+        path: '/duel',
+        name: 'Duel',
+        component: Duel
       }
     ]
   });

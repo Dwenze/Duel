@@ -11,7 +11,7 @@ import axios from 'axios'
 axios.interceptors.request.use(
 	config => {
 		if (config.url == '/') {
-			
+			//TODO
 		}
 		let token = window.localStorage.getItem('auth');
 		if (token) {
@@ -22,6 +22,7 @@ axios.interceptors.request.use(
 	error => {
 		return Promise.reject(error)
 	})
+
 //+ jwt
 import jwt from 'jwt-simple'
 Vue.use(ElementUI);

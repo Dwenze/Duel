@@ -63,7 +63,10 @@
 </template>
 
 <script>
-import Rank from './components/rank';
+import Duel from './components/duel';
+import Index from './components/index';
+import DuelMobile from './components/duelmobile';
+import IndexMobile from './components/indexmobile';
 export default {
   name: 'App',
   data () {
@@ -94,7 +97,7 @@ export default {
             });
             window.localStorage.setItem('auth', res.data.data);
             this.loginFormVisible = false;
-            this.$router.push({path: '/'});
+            this.$router.push({path: '/duel'});
           }
           else {
             this.$message.error({
@@ -188,7 +191,7 @@ export default {
       }
     }
   },
-  components: {Rank}
+  components: {Duel, DuelMobile, Index, IndexMobile}
 }
 </script>
 
