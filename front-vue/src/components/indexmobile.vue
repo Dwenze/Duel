@@ -1,6 +1,12 @@
 <template>
   <div class="hello">
     <h1>移动端主页</h1>
+    <el-container id="indexmobile">
+    <el-header>
+      <div class="header"></div>
+    </el-header>
+    <el-main>Main</el-main>
+  </el-container>
   </div>
 </template>
 
@@ -35,6 +41,17 @@ export default {
 .m-hd {
   position: fixed;
   width: 100%;
-  height: 40px;
+  height: 60px;
+}
+
+</style>
+<style>
+  .el-container{
+  margin-top: 100px;
+}
+.header-container{
+  width: 100%;
+  height:100px;
+  background-color: black;
 }
 </style>

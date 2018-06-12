@@ -1,7 +1,7 @@
 <template>
   <el-container id="app">
     <el-header>
-      <el-button type="primary" style="border: none" @click="loginFormVisible = true">登录</el-button>
+      <el-button type="primary" style="border: none;margin-left:200px;" @click="loginFormVisible = true">登录</el-button>
       <el-dialog v-if="formType === 'login'" title="登录" :visible.sync="loginFormVisible">
         <div class="input-container">
           <el-input v-model="username" placeholder="请输入用户名">
