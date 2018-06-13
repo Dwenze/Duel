@@ -12,10 +12,16 @@
     "build": "node build/build.js"
   },
   "dependencies": {
+    "ajv": "^6.5.0",
     "axios": "^0.18.0",
+    "cnpm": "^6.0.0",
     "element-ui": "^2.3.8",
+    "express": "^4.16.3",
+    "jav": "^1.0.2",
     "jwt-simple": "^0.5.1",
     "mint-ui": "^2.2.13",
+    "npm": "^6.1.0",
+    "socket.io": "^2.1.1",
     "vue": "^2.5.2",
     "vue-router": "^3.0.1"
   },
@@ -69,5 +75,10 @@
     "> 1%",
     "last 2 versions",
     "not ie <= 8"
-  ]
+  ],
+  "main": ".postcssrc.js",
+  "directories": {
+    "test": "test"
+  },
+  "license": "ISC"
 }
